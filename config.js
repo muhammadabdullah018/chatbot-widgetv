@@ -13,10 +13,10 @@ window.ANATEN_CONFIG = {
 
   // --- Brand Colors ---
   colors: {
-    primary: "#7C6FF7",        // Main purple
-    secondary: "#F472B6",      // Pink accent
-    gradientFrom: "#EEF2FF",   // Light lavender
-    gradientTo: "#FDF2F8",     // Light pink
+    primary: "#7C6FF7",
+    secondary: "#F472B6",
+    gradientFrom: "#EEF2FF",
+    gradientTo: "#FDF2F8",
     bubbleBot: "#ffffff",
     bubbleUser: "#7C6FF7",
     textBot: "#1e1e2e",
@@ -31,54 +31,187 @@ window.ANATEN_CONFIG = {
 
   // --- Quick Reply Buttons ---
   quickReplies: [
-    { label: "🍽️ Show menu", message: "Show me the menu" },
-    { label: "⭐ Today's specials", message: "What are today's specials?" },
-    { label: "🛒 Place an order", message: "I want to place an order" },
-    { label: "🕐 Opening hours", message: "What are your opening hours?" },
+    { label: "🍽️ Show Menu",       message: "Show me the menu" },
+    { label: "⭐ Today's Specials", message: "What are today's specials?" },
+    { label: "🛒 Place Order",      message: "I want to place an order" },
+    { label: "🕐 Opening Hours",    message: "What are your opening hours?" },
   ],
 
-  // --- Company Data (Ground Truth for AI) ---
+  // --- Company Knowledge Base ---
   // This is what the AI uses to answer questions
   companyData: `
-    Company: Brew & Batter
-    Type: Artisan Bakery & Cafe
-    Location: 123 Baker Street, Islamabad
-    Phone: +92 300 1234567
-    Opening Hours: Mon-Sat 8am-9pm, Sunday 10am-6pm
+========================
+BREW & BATTER
+========================
 
-    MENU:
-    === Baked Goods ===
-    - Croissant: Rs. 250
-    - Chocolate Muffin: Rs. 200
-    - Blueberry Muffin: Rs. 200
-    - Cinnamon Roll: Rs. 300
-    - Sourdough Bread (loaf): Rs. 600
-    - Banana Bread (slice): Rs. 180
+ABOUT
 
-    === Cakes & Pastries ===
-    - Chocolate Lava Cake: Rs. 450
-    - Red Velvet Slice: Rs. 400
-    - Cheesecake Slice: Rs. 420
-    - Custom Cakes: Starting from Rs. 2500 (24hr notice)
+Brew & Batter is a cozy artisan bakery and cafe serving fresh pastries,
+handcrafted coffee, breakfast, desserts and sandwiches.
 
-    === Drinks ===
-    - Espresso: Rs. 250
-    - Cappuccino: Rs. 350
-    - Latte: Rs. 380
-    - Cold Brew: Rs. 400
-    - Hot Chocolate: Rs. 350
-    - Chai Latte: Rs. 300
+ADDRESS
 
-    === Today's Specials ===
-    - Strawberry Tart: Rs. 380
-    - Matcha Croissant: Rs. 320
-    - Iced Brown Sugar Latte: Rs. 420
+123 Baker Street
+Islamabad
 
-    POLICIES:
-    - Orders can be placed in-store or via this chat
-    - Custom cake orders require 24 hours notice
-    - We offer delivery within 5km radius
-    - Minimum delivery order: Rs. 1000
-    - Payment: Cash, EasyPaisa, JazzCash, Card
-  `
+CONTACT
+
+Phone: +92 300 1234567
+Email: hello@brewandbatter.pk
+
+OPENING HOURS
+
+Monday - Thursday  8:00 AM - 9:00 PM
+Friday             8:00 AM - 10:00 PM
+Saturday           9:00 AM - 10:00 PM
+Sunday             9:00 AM - 8:00 PM
+
+========================
+MENU
+========================
+
+COFFEE
+
+Espresso           Rs. 250
+Americano          Rs. 300
+Cappuccino         Rs. 350
+Latte              Rs. 380
+Mocha              Rs. 450
+
+ICED DRINKS
+
+Cold Brew          Rs. 400
+Iced Latte         Rs. 420
+Caramel Frappe     Rs. 520
+
+BREAKFAST
+
+Classic Pancakes   Rs. 650
+Belgian Waffles    Rs. 750
+French Toast       Rs. 700
+Breakfast Platter  Rs. 1,250
+
+BAKERY
+
+Butter Croissant      Rs. 250
+Chocolate Croissant   Rs. 300
+Blueberry Muffin      Rs. 220
+Chocolate Muffin      Rs. 220
+Cinnamon Roll         Rs. 320
+
+SANDWICHES
+
+Club Sandwich      Rs. 900
+Chicken Panini     Rs. 850
+Veggie Sandwich    Rs. 750
+
+DESSERTS
+
+Chocolate Brownie       Rs. 350
+Chocolate Lava Cake     Rs. 500
+Cheesecake              Rs. 450
+Red Velvet Slice        Rs. 450
+
+========================
+TODAY'S SPECIALS
+========================
+
+Matcha Croissant                 Rs. 350
+Honey Almond Latte               Rs. 450
+Strawberry Danish                Rs. 320
+Chocolate Hazelnut Cheesecake    Rs. 550
+
+========================
+ORDERING
+========================
+
+Customers can order through this chat.
+
+Available Order Types:
+• Dine In
+• Takeaway
+• Delivery
+
+Delivery Radius:         8 km
+Minimum Delivery Order:  Rs. 1,000
+Estimated Delivery Time: 30–45 minutes
+
+When taking an order:
+1. Confirm every item and mention its price.
+2. Ask for quantity if not given.
+3. Calculate the total.
+4. Ask whether the customer wants Delivery, Takeaway, or Dine-In.
+5. Ask if they want to add anything else.
+6. Ask for name and phone number.
+7. If Delivery, ask for delivery address.
+8. Ask for payment method.
+9. Confirm the complete order summary.
+
+========================
+PAYMENT METHODS
+========================
+
+Cash
+Credit Card
+Debit Card
+EasyPaisa
+JazzCash
+
+========================
+GIFT CARDS
+========================
+
+Available denominations:
+• Rs. 1,000
+• Rs. 2,500
+• Rs. 5,000
+
+Available as Digital or Physical Gift Cards.
+
+========================
+LOYALTY PROGRAM
+========================
+
+Buy 9 coffees and get the 10th coffee free.
+
+========================
+FAQ
+========================
+
+Q: Do you have Wi-Fi?          A: Yes.
+Q: Do you deliver?             A: Yes.
+Q: Can I reserve a table?      A: Yes.
+Q: Do you have vegan options?  A: Yes.
+Q: Can I customize my coffee?  A: Yes.
+Q: Do you make birthday cakes? A: Yes. Custom cakes require 24 hours notice.
+
+========================
+POLICIES
+========================
+
+• Delivery available within 8 km.
+• Custom cake orders require 24 hours notice.
+• Outside food is not allowed.
+• No smoking inside the cafe.
+• Free parking available.
+• Free Wi-Fi available.
+• Refunds are only available before food preparation begins.
+
+========================
+IMPORTANT
+========================
+
+Only answer questions related to Brew & Batter.
+
+If someone asks about science, math, politics, sports, history, programming,
+or any unrelated topic, politely reply:
+
+  "I'm sorry, I can only assist with questions related to Brew & Batter.
+   Please ask me about our menu, drinks, opening hours, ordering, delivery,
+   or other cafe services."
+
+Never invent menu items or prices.
+If information is unavailable, politely ask the customer to call the cafe.
+`,
+
 };
