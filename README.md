@@ -1,116 +1,151 @@
-Abdullah Baloch — Chatbot Widget
+# Anaten AI — Embeddable Chat Widget
 
-Brew & Batter Edition
+A white-label AI chat widget that plugs into any business website. Customers type a question, Gemini AI answers using your company's data, and every conversation gets logged to Google Sheets automatically.
 
-A white-label AI chatbot widget built for bakeries and businesses. Powered by Google Gemini AI via n8n automation, hosted on Vercel.
+Built to be reused. Swap `config.js` and it becomes a different business.
 
+---
 
-What This Is
+## How It Works
 
-A beautiful chat widget that can be embedded on any company website. Customers can ask questions, browse the menu, and get instant AI-powered replies — all logged automatically to Google Sheets.
+```
+User types a message
+        ↓
+chat.js sends POST request to n8n webhook
+        ↓
+n8n extracts message + company knowledge base
+        ↓
+Google Gemini 2.5 Flash generates a reply
+        ↓
+n8n formats the response + logs it to Google Sheets
+        ↓
+Widget displays the reply in the chat UI
+```
 
+---
 
-Tech Stack
+## Tech Stack
 
-LayerTechnologyFrontendHTML, CSS, JavaScriptHostingVercelBackendn8n CloudAI ModelGoogle Gemini 2.5 FlashLoggingGoogle Sheets
+| Layer      | Technology              |
+|------------|-------------------------|
+| Frontend   | HTML, CSS, JavaScript   |
+| Hosting    | Vercel                  |
+| Backend    | n8n Cloud               |
+| AI Model   | Google Gemini 2.5 Flash |
+| Logging    | Google Sheets           |
 
+---
 
-Project Structure
+## Project Structure
 
+```
 chatbot-widget/
-├── index.html       — Main UI (landing + chat screens)
-├── style.css        — All styles and animations
-├── chat.js          — Chat logic, webhook calls, message handling
-├── config.js        — Company config (name, colors, menu, webhook URL)
-├── vercel.json      — Vercel deployment config with CORS headers
-└── README.md        — This file
+├── index.html      # Main UI — landing screen + chat screen
+├── style.css       # All styles, animations, responsive layout
+├── chat.js         # Core logic — sends messages, handles responses
+├── config.js       # Company config — name, colors, menu, webhook URL
+├── vercel.json     # Vercel deployment config + CORS headers
+└── README.md
+```
 
+---
 
-How It Works
+## n8n Workflow
 
-User types message
-       ↓
-chat.js sends POST to n8n webhook
-       ↓
-n8n extracts message + company data
-       ↓
-Gemini AI generates reply using company data
-       ↓
-n8n formats response + logs to Google Sheets
-       ↓
-Widget displays the reply
+The backend is a single n8n workflow with 6 nodes:
 
+```
+Webhook → Code (parse input) → Message a Model (Gemini) → Code (format output) → Append Row (Sheets) → Respond to Webhook
+```
 
-n8n Workflow Nodes
+| Node              | What It Does                                      |
+|-------------------|---------------------------------------------------|
+| Webhook           | Receives POST from the widget                     |
+| Code (1st)        | Extracts `message`, `companyName`, `companyData`  |
+| Message a Model   | Sends prompt to Gemini 2.5 Flash                  |
+| Code (2nd)        | Formats reply, adds timestamp                     |
+| Append Row        | Logs conversation to Google Sheets                |
+| Respond to Webhook| Returns the reply to the widget                   |
 
-Webhook → Code (clean input) → Message a Model (Gemini) → Code (format response) → Append Row in Sheet → Respond to Webhook
+---
 
-NodePurposeWebhookReceives POST from widgetCode (1st)Extracts message, companyName, companyDataMessage a ModelSends prompt to Gemini 2.5 FlashCode (2nd)Formats Gemini reply, adds timestampAppend RowLogs conversation to Google SheetsRespond to WebhookSends reply back to widget
+## Google Sheets Log Structure
 
+Sheet name: `Anaten - Conversation Logs`  
+Tab name: `Logs`
 
-Webhook URL
+| Column | Value         |
+|--------|---------------|
+| A      | Timestamp     |
+| B      | Company Name  |
+| C      | User Message  |
+| D      | Bot Reply     |
+| E      | Source        |
 
-https://bbaabaloch.app.n8n.cloud/webhook/chat
+---
 
+## Customizing for a New Company
 
-Google Sheets Setup
+Everything that needs to change lives in `config.js`. That's it.
 
-Sheet name: Anaten - Conversation Logs
-
-Tab name: Logs
-
-ColumnValueA — TimestampAuto-filledB — CompanyAuto-filledC — User MessageAuto-filledD — Bot ReplyAuto-filledE — Sourceweb-widget
-
-
-Customizing for a New Company
-
-All you need to change is config.js:
-
-jswindow.ANATEN_CONFIG = {
-  companyName: "Your Company Name",
+```js
+window.ANATEN_CONFIG = {
+  companyName: "Your Business Name",
   companyEmoji: "🏪",
   companyTagline: "Your tagline here",
-  webhookUrl: "https://your-n8n-url/webhook/chat",
+  webhookUrl: "https://your-n8n-instance/webhook/chat",
+
   colors: {
     primary: "#7C6FF7",
     secondary: "#F472B6",
+    gradientFrom: "#EEF2FF",
+    gradientTo: "#FDF2F8",
   },
+
   welcomeMessage: "Hi! How can I help you today?",
+
   quickReplies: [
-    { label: "📋 Our Services", message: "What services do you offer?" },
+    { label: "📋 Services", message: "What services do you offer?" },
+    { label: "🕐 Hours",    message: "What are your opening hours?" },
   ],
+
   companyData: `
-    // Paste all company info here
-    // Menu, prices, hours, policies
-    // This is what the AI uses to answer questions
+    Paste all business info here.
+    Menu, prices, hours, policies, FAQs.
+    This is what the AI reads to answer questions.
   `
 };
+```
 
+The AI only answers questions based on `companyData`. It won't invent prices or go off-topic.
 
-Deploying to Vercel
+---
 
+## Deploying to Vercel
 
-Push all files to a GitHub repo
-Go to vercel.com → New Project → Import repo
-Set Root Directory to chatbot-widget
-Click Deploy
-Update webhookUrl in config.js if needed
+1. Push all files to a GitHub repo
+2. Go to [vercel.com](https://vercel.com) → New Project → Import repo
+3. Set **Root Directory** to `chatbot-widget`
+4. Click **Deploy**
+5. Update `webhookUrl` in `config.js` if your n8n instance URL changes
 
+---
 
+## Current Demo Company
 
-Current Test Company
+**Brew & Batter** — Artisan Bakery & Cafe  
+📍 123 Baker Street, Islamabad  
+Configured with full menu, ordering flow, delivery info, and FAQs.
 
-Brew & Batter — Artisan Bakery & Cafe
+---
 
-📍 123 Baker Street, Islamabad
+## Security Note
 
-📞 +92 300 1234567
+The webhook URL in `config.js` is client-side and therefore visible in the browser. To prevent abuse, configure your n8n webhook to validate a shared secret in the request headers.
 
+---
 
+## Built By
 
-
-Built By
-
-Abdullah Baloch — Universal Chatbot Widget Platform
-
-Any company. Any industry. Just change config.js.
+**Abdullah Baloch** — [Sazaan Studios](https://sazaanstudios.com)  
+White-label AI chat solution. Any business. Any industry. Just change `config.js`.
