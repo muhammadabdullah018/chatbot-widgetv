@@ -1,4 +1,4 @@
-# Anaten AI — Embeddable Chat Widget
+# n8n AI — Embeddable Chat Widget
 
 A white-label AI chat widget that plugs into any business website. Customers type a question, Gemini AI answers using your company's data, and every conversation gets logged to Google Sheets automatically.
 
